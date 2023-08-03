@@ -2,10 +2,16 @@ package org.example.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import org.example.models.Student;
 import org.example.models.University;
+import org.glassfish.jaxb.runtime.api.TypeReference;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.apache.fop.render.AbstractRendererConfigurator.getType;
 
 public final class JsonUtils {
 
@@ -22,6 +28,14 @@ public final class JsonUtils {
 
     }
 
+    public static Student studentFromJson (String studentJsonString) {
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Student studentRestoredJson = gson.fromJson(studentJsonString, Student.class);
+        return studentRestoredJson;
+
+    }
+
     public static String studentListToJson (List<Student> studentDataStorage){
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -30,11 +44,21 @@ public final class JsonUtils {
 
     }
 
-    public static Student studentFromJson (String studentJsonString) {
+    public static List<Student> studentListFromJson (String studentListJsonString){
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Student studentRestoredJson = gson.fromJson(studentJsonString, Student.class);
-        return studentRestoredJson;
+//        List<Student> studentListRestoredFromJson = gson.fromJson(studentListJsonString, List<Student>(){}.getType());
+//        List<Student> participantJsonList = mapper.readValue(studentListJsonString, new TypeReference<List<Student>>(){});
+//        Type collectionType = new TypeToken >(){}.getType();
+//        List gBooks = gson.fromJson(studentListJsonString, collectionType);
+//
+//        return studentListRestoredFromJson;
+//
+//        String list = "your_json_string";
+//        Gson gson = new Gson();
+        Type listType = new TypeToken<ArrayList<Student>>() {}.getType();
+        ArrayList<Student> studentListRestoredFromJson = new Gson().fromJson(studentListJsonString , listType);
+        return studentListRestoredFromJson;
 
     }
 
