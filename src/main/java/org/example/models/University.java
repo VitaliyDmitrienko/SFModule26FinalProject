@@ -3,6 +3,8 @@ package org.example.models;
 
 import org.example.enums.StudyProfile;
 
+import java.util.Objects;
+
 public class University {
     private String id;
     private String fullName;
@@ -51,4 +53,16 @@ public class University {
 
     public University() {}
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof University)) return false;
+        University that = (University) o;
+        return yearOfFoundation == that.yearOfFoundation && Objects.equals(id, that.id) && Objects.equals(fullName, that.fullName) && Objects.equals(shortName, that.shortName) && mainProfile == that.mainProfile;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, fullName, shortName, yearOfFoundation, mainProfile);
+    }
 }

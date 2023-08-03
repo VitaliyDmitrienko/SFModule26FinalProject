@@ -15,6 +15,7 @@ import org.example.utils.XLSXFileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.example.utils.JsonUtils.*;
 
@@ -36,18 +37,40 @@ public class Main {
         List<Student> studentDataStorage = new ArrayList<>(XLSXFileReader.getStudentData());
         List<University> universityDataStorage = new ArrayList<>(XLSXFileReader.getUniversityData());
 
-        String studentJson = studentToJson (studentDataStorage.get(0));
-        System.out.println(studentJson);
+        Student studentSentToJson = studentDataStorage.get(0);
+        System.out.println("Student sent to Json: \n" + studentSentToJson);
+        System.out.println();
+        String studentReceivedFromJson = JsonUtils.studentToJson (studentSentToJson);
+        System.out.println("Student converted to Json-string: \n" + studentReceivedFromJson);
         System.out.println();
 
-        String studentListJson = studentListToJson (studentDataStorage);
-        System.out.println(studentJson);
+        Student studentRecoveredFromJson = JsonUtils.studentFromJson(studentReceivedFromJson);
+        System.out.println("Student received & recovered from Json: \n" + studentRecoveredFromJson);
+        System.out.println();
+        System.out.println("Students sent & received from Json are equals? This is: << "
+                + studentSentToJson.equals(studentRecoveredFromJson) + " >>.");
         System.out.println();
 
 
-        String universityJson = universityToJson (universityDataStorage.get(5));
-        System.out.println(universityJson);
+//        String studentListJson = JsonUtils.studentListToJson (studentDataStorage);
+//        System.out.println(studentListJson);
+//        System.out.println();
+
+        University universitySentToJson = universityDataStorage.get(5);
+        System.out.println("University sent to Json: \n" + universitySentToJson);
         System.out.println();
+        String universityReceivedJson = JsonUtils.universityToJson (universitySentToJson);
+        System.out.println("University converted to Json-string: \n" + universityReceivedJson);
+        System.out.println();
+
+        University universityRecoveredFromJson = JsonUtils.universityFromJson(universityReceivedJson);
+        System.out.println("University received & recovered from Json: \n" + universityRecoveredFromJson);
+        System.out.println();
+        System.out.println("University sent & received from Json are equals? This is: <<"
+                + studentSentToJson.equals(studentRecoveredFromJson) + ">>.");
+
+
+
 
 
     }

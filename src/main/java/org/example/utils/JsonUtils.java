@@ -23,16 +23,34 @@ public final class JsonUtils {
     }
 
     public static String studentListToJson (List<Student> studentDataStorage){
+
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonString = gson.toJson(studentDataStorage);
         return jsonString;
 
     }
+
+    public static Student studentFromJson (String studentJsonString) {
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Student studentRestoredJson = gson.fromJson(studentJsonString, Student.class);
+        return studentRestoredJson;
+
+    }
+
     public static String universityToJson (University university) {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonString = gson.toJson(university);
         return jsonString;
+
+    }
+
+    public static University universityFromJson (String universityJsonString) {
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        University universityRestoredJson = gson.fromJson(universityJsonString, University.class);
+        return universityRestoredJson;
 
     }
 
