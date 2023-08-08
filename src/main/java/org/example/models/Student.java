@@ -32,14 +32,8 @@ public class Student {
                 ", universityId='" + universityId + '\'' +
                 ", currentCourseNumber=" + currentCourseNumber +
                 ", avgExamScore=" + avgExamScore +
-                '}';
+                '}' + '\n';
     }
-
-//    @Override
-//    public int hashCode () {
-//        int dnaCode = 0;
-//        return dnaCode;
-//    }
 
     public Student(String fullName, String universityId, int currentCourseNumber, float avgExamScore) {
         this.fullName = fullName;

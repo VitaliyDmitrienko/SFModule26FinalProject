@@ -73,9 +73,26 @@ public final class JsonUtils {
     public static University universityFromJson (String universityJsonString) {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        University universityRestoredJson = gson.fromJson(universityJsonString, University.class);
-        return universityRestoredJson;
+//        University universityRestoredJson = gson.fromJson(universityJsonString, University.class);
+//        return universityRestoredJson;
+        return gson.fromJson(universityJsonString, University.class);
 
     }
 
+    public static String universityListToJson(List<University> universityDataStorage) {
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String jsonString = gson.toJson(universityDataStorage);
+        return jsonString;
+
+    }
+
+    public static List<University> universityListFromJson(String universityListJsonString) {
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Type listType = new TypeToken<ArrayList<University>>() {}.getType();
+        ArrayList<University> universityListRestoredFromJson = new Gson().fromJson(universityListJsonString , listType);
+        return universityListRestoredFromJson;
+
+    }
 }

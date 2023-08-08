@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 import static org.example.utils.JsonUtils.*;
 
@@ -36,20 +37,20 @@ public class Main {
 
         List<Student> studentDataStorage = new ArrayList<>(XLSXFileReader.getStudentData());
         List<University> universityDataStorage = new ArrayList<>(XLSXFileReader.getUniversityData());
-//
-//        Student studentSentToJson = studentDataStorage.get(0);
-//        System.out.println("Student sent to Json: \n" + studentSentToJson);
-//        System.out.println();
-//        String studentReceivedFromJson = JsonUtils.studentToJson (studentSentToJson);
-//        System.out.println("Student converted to Json-string: \n" + studentReceivedFromJson);
-//        System.out.println();
-//
-//        Student studentRecoveredFromJson = JsonUtils.studentFromJson(studentReceivedFromJson);
-//        System.out.println("Student received & recovered from Json: \n" + studentRecoveredFromJson);
-//        System.out.println();
-//        System.out.println("Students sent & received from Json are equals? This is: << "
-//                + studentSentToJson.equals(studentRecoveredFromJson) + " >>.");
-//        System.out.println();
+
+        Student studentSentToJson = studentDataStorage.get(0);
+        System.out.println("Student sent to Json: \n" + studentSentToJson);
+        System.out.println();
+        String studentReceivedFromJson = JsonUtils.studentToJson (studentSentToJson);
+        System.out.println("Student converted to Json-string: \n" + studentReceivedFromJson);
+        System.out.println();
+
+        Student studentRecoveredFromJson = JsonUtils.studentFromJson(studentReceivedFromJson);
+        System.out.println("Student received & recovered from Json: \n" + studentRecoveredFromJson);
+        System.out.println();
+        System.out.println("Students sent & received from Json are equals? This is: << "
+                + studentSentToJson.equals(studentRecoveredFromJson) + " >>.");
+        System.out.println();
 
 
         String studentListToJson = JsonUtils.studentListToJson (studentDataStorage);
@@ -61,6 +62,14 @@ public class Main {
         System.out.println("studentDataStorage size is: " + studentDataStorage.size());
         System.out.println("studentListFromJson size is: " + studentListFromJson.size());
         System.out.println();
+
+        System.out.println("Student's Lists size (sent & received) from Json are equals? This is: << " + (studentDataStorage.size() == studentListFromJson.size()) + " >>.");
+        System.out.println();
+
+        studentDataStorage.stream().peek(s -> {
+            Function<Student, String> studentToJson = JsonUtils::studentToJson;
+            System.out.println("Student converted to Json: " + studentToJson);
+        }).forEach(s -> System.out.println("Student: " + s));
 
 //        University universitySentToJson = universityDataStorage.get(5);
 //        System.out.println("University sent to Json: \n" + universitySentToJson);
@@ -74,6 +83,20 @@ public class Main {
 //        System.out.println();
 //        System.out.println("University sent & received from Json are equals? This is: <<"
 //                + studentSentToJson.equals(studentRecoveredFromJson) + ">>.");
+
+        String universityListToJson = JsonUtils.universityListToJson (universityDataStorage);
+        System.out.println(universityListToJson);
+        System.out.println();
+
+        List<University> universityListFromJson = JsonUtils.universityListFromJson(universityListToJson);
+        System.out.println(universityListFromJson);
+        System.out.println("universityDataStorage size is: " + universityDataStorage.size());
+        System.out.println("universityListFromJson size is: " + universityListFromJson.size());
+        System.out.println();
+        System.out.println("Universities Lists size (sent & received) from Json are equals? This is: << "
+                + (universityDataStorage.size() == universityListFromJson.size()) + " >>.");
+        System.out.println();
+
 
 
 

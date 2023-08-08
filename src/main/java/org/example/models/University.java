@@ -40,7 +40,7 @@ public class University {
                 ", shortName='" + shortName + '\'' +
                 ", yearOfFoundation=" + yearOfFoundation +
                 ", mainProfile=" + mainProfile +
-                '}';
+                '}' + '\n';
     }
 
     public University(String id, String fullName, String shortName, int yearOfFoundation, StudyProfile mainProfile) {
