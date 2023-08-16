@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 
-public class Main {
+public class MainPreFinal {
 
     public static void main(String[] args) throws IOException {
 
@@ -30,7 +30,6 @@ public class Main {
         List<Student> studentDataStorage = new ArrayList<>(XLSXFileReader.getStudentData());
         List<University> universityDataStorage = new ArrayList<>(XLSXFileReader.getUniversityData());
 
-        System.out.println("<======================= Student chapter (start) ============================>");
         Student studentSentToJson = studentDataStorage.get(0);
         System.out.println("Student (single/original) sent to Json: \n" + studentSentToJson);
         String studentReceivedFromJson = JsonUtils.studentToJson (studentSentToJson);
@@ -42,6 +41,7 @@ public class Main {
         System.out.println();
         System.out.println("Students (single) sent to & received from Json are equals? This is: << "
                 + studentSentToJson.equals(studentRecoveredFromJson) + " >>.");
+        System.out.println("<===================================================>");
         System.out.println();
 
         String studentListToJson = JsonUtils.studentListToJson (studentDataStorage);
@@ -50,6 +50,7 @@ public class Main {
         System.out.println("Head of Full List Json-string. ");
         System.out.println(studentListToJson);
         System.out.println("End of Full List Json-string. ");
+        System.out.println("<===================================================>");
         System.out.println();
 
         List<Student> studentListFromJson = JsonUtils.studentListFromJson(studentListToJson);
@@ -61,20 +62,53 @@ public class Main {
         System.out.println();
         System.out.println("Student's Lists size (sent & received) from Json are equals? This is: << "
                 + (studentDataStorage.size() == studentListFromJson.size()) + " >>.");
+        System.out.println("<===================================================>");
         System.out.println();
 
+//        Моё собственное решение: был в одном шаге от завершения, но запутался в неоднозначной формулировке автора ТЗ
+//        studentDataStorage.stream().peek(s -> {
+//            Function<Student, String> studentToJson = JsonUtils::studentToJson;
+//            System.out.println("Student converted to Json: " + studentToJson);
+//        }).forEach(s -> System.out.println("Student: " + s));
+//       studentDataStorage.stream().peek(s -> {
+//            String studentToJson = JsonUtils.studentToJson(s);
+//            System.out.println("Student converted to Json: " + studentToJson);
+//       }).forEach(s -> System.out.println("Student: " + s));
+
+//        Авторское решение ментора Максима Шишова:
+//        Stream<University> listOfUniversity1 = universityBeforeSerialization.stream();
+//        Stream<University> listOfUniversity2 = universityBeforeSerialization.stream();
+//        Stream.concat(
+//                        listOfUniversity1.limit(2).map(JsonUtil::serializeUniversityObject),
+//                        listOfUniversity2.limit(2).map(JsonUtil::serializeUniversityObject).map(JsonUtil::deserializeUniversityObject))
+//                .forEach(System.out::println);
+//        допилено мной под мой проект:
         System.out.println("Students List In/Out from Json one after the other at the same time by double/concat to single Stream: \n");
-        Stream<Student> studentList1 = studentDataStorage.stream();
-        Stream<Student> studentList2 = studentDataStorage.stream();
+        Stream<Student> listOfUniversity1 = studentDataStorage.stream();
+        Stream<Student> listOfUniversity2 = studentDataStorage.stream();
         Stream.concat(
-                        studentList1.limit(12).map(JsonUtils::studentToJson),
-                        studentList2.limit(12).map(JsonUtils::studentToJson).
+                        listOfUniversity1.limit(12).map(JsonUtils::studentToJson),
+                        listOfUniversity2.limit(12).map(JsonUtils::studentToJson).
                                 map(JsonUtils::studentFromJson))
                 .forEach(System.out::println);
-        System.out.println("<======================= Student chapter (end) ============================>");
+        System.out.println("<===================================================>");
         System.out.println();
 
-        System.out.println("<======================= University chapter (start) ============================>");
+
+//        Авторское решение составителя ТЗ с платформы:
+//        Сериализация/десериализация одновременно в одном потоке при помощи итератора
+//        проверено: работает как надо
+//        System.out.println("Students List In/Out from Json parallel at the same time by single Stream: \n");
+//        studentDataStorage.forEach(student -> {
+//            String studentJson = JsonUtils.studentToJson(student);
+//            System.out.println("Serialized student to Json: " + studentJson);
+//            Student studentFromJson = JsonUtils.studentFromJson(studentJson);
+//            System.out.println("Restored student from Json: \n" + studentFromJson);
+//        });
+//        System.out.println();
+
+
+        System.out.println("<===================================================>");
         University universitySentToJson = universityDataStorage.get(5);
         System.out.println("University (original/single) sent to Json: \n" + universitySentToJson);
         System.out.println();
@@ -88,12 +122,14 @@ public class Main {
         System.out.println("University sent to & received from Json are equals? This is: <<"
                 + studentSentToJson.equals(studentRecoveredFromJson) + ">>.");
 
+        System.out.println("<===================================================>");
         String universityListToJson = JsonUtils.universityListToJson (universityDataStorage);
         System.out.println("Full Universities List converted to Json format: ");
         System.out.println("Total List size is: " + universityDataStorage.size() + " .");
         System.out.println("Head of Full List Json-string. ");
         System.out.println(universityListToJson);
         System.out.println("End of Full List Json-string. ");
+        System.out.println("<===================================================>");
         System.out.println();
 
         List<University> universityListFromJson = JsonUtils.universityListFromJson(universityListToJson);
@@ -105,18 +141,20 @@ public class Main {
         System.out.println();
         System.out.println("Universities Lists size (sent & received) from Json are equals? This is: << "
                 + (universityDataStorage.size() == universityListFromJson.size()) + " >>.");
+        System.out.println("<===================================================>");
         System.out.println();
 
+//        Авторское решение составителя ТЗ с платформы:
+//        Сериализация/десериализация одновременно в одном потоке при помощи итератора
+//        проверено: работает как надо
         System.out.println("Universities List In/Out from Json parallel at the same time by single Stream: \n");
-        Stream<University> universityList1 = universityDataStorage.stream();
-        Stream<University> universityList2 = universityDataStorage.stream();
-        Stream.concat(
-                        universityList1.limit(12).map(JsonUtils::universityToJson),
-                        universityList2.limit(12).map(JsonUtils::universityToJson).
-                                map(JsonUtils::universityFromJson))
-                .forEach(System.out::println);
-        System.out.println("<======================= University chapter (end) ============================>");
-        System.out.println();
+        universityDataStorage.forEach(university -> {
+            String universityJson = JsonUtils.universityToJson(university);
+            System.out.println("Serialized university to Json: " + universityJson);
+            University universityFromJson = JsonUtils.universityFromJson(universityJson);
+            System.out.println("Restored university from Json: \n" + universityFromJson);
+        });
+        System.out.println("<===================================================>");
 
     }
 }

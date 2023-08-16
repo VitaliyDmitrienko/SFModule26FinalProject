@@ -1,12 +1,18 @@
 // Module 26.9 intermediate project (Student/University method's comparator)
 package org.example.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Objects;
 
 public class Student {
+    @SerializedName("StudFullName")
     private String fullName = null;
+    @SerializedName("UnivID")
     private String universityId;
+    @SerializedName("CurCourseNum")
     private int currentCourseNumber;
+    @SerializedName("AvgExamScr")
     private float avgExamScore;
 
     public String getFullName() {

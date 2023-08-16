@@ -1,15 +1,21 @@
 // Module 26.9 intermediate project (Student/University method's comparator)
 package org.example.models;
 
+import com.google.gson.annotations.SerializedName;
 import org.example.enums.StudyProfile;
 
 import java.util.Objects;
 
 public class University {
+    @SerializedName("ID")
     private String id;
+    @SerializedName("UnivFullName")
     private String fullName;
+    @SerializedName("UnivShortName")
     private String shortName;
+    @SerializedName("UnivYoF")
     private int yearOfFoundation;
+    @SerializedName("UnivMAinProf")
     private StudyProfile mainProfile;
 
     public String getId() {
